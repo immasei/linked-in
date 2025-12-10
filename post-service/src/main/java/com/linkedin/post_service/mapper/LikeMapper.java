@@ -1,11 +1,12 @@
 package com.linkedin.post_service.mapper;
 
+import com.linkedin.post_service.config.GlobalMapperConfig;
 import com.linkedin.post_service.dto.LikeRequestDTO;
 import com.linkedin.post_service.entity.Like;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(config = GlobalMapperConfig.class)
 public interface LikeMapper {
 
     @Mapping(target = "id", ignore = true)

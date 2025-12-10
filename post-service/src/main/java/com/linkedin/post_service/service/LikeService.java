@@ -22,14 +22,10 @@ public class LikeService {
     public void like(Like like) {
         checkTargetExists(like.getTargetType(), like.getTargetId());
 
-        boolean alreadyLiked = likeRepository
-                .existsByUserIdAndTargetTypeAndTargetId(
-                        like.getUserId(),
-                        like.getTargetType(),
-                        like.getTargetId()
-                );
+        if (likeRepository.existsByUserIdAndTargetTypeAndTargetId(
+                like.getUserId(), like.getTargetType(), like.getTargetId()
+        )) throw new BadRequestException("Already liked.");
 
-        if (alreadyLiked) throw new BadRequestException("Cannot like the same post again.");
         likeRepository.save(like);
     }
 
@@ -37,10 +33,10 @@ public class LikeService {
     public void unlike(Long userId, LikeTargetType targetType, Long targetId) {
         checkTargetExists(targetType, targetId);
 
-        boolean alreadyLiked = likeRepository
-            .existsByUserIdAndTargetTypeAndTargetId(userId, targetType, targetId);
+        if (!likeRepository.existsByUserIdAndTargetTypeAndTargetId(
+                userId, targetType, targetId
+        )) throw new BadRequestException("Not liked before.");
 
-        if (!alreadyLiked) throw new BadRequestException("Cannot unlike the post which is not liked.");
         likeRepository
             .deleteByUserIdAndTargetTypeAndTargetId(userId, targetType, targetId);
     }

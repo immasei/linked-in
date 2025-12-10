@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/core")
 @RequiredArgsConstructor
 public class PostController {
 
@@ -41,7 +41,7 @@ public class PostController {
         return ResponseEntity.ok(postMapper.toDTO(post));
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/users/{userId}")
     public ResponseEntity<List<PostDTO>> getAllPostsOfUser(@PathVariable Long userId) {
         List<Post> posts = postService.getAllPostsOfUser(userId);
         return ResponseEntity.ok(postMapper.toDTOs(posts));

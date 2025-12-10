@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -40,15 +38,6 @@ public class Post {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
-    // all comments, incl replies
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
-    public void addComment(Comment comment) {
-        comment.setPost(this);
-        this.comments.add(comment);
-    }
 
 }
 
