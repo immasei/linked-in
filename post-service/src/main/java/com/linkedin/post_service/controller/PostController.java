@@ -1,11 +1,13 @@
 package com.linkedin.post_service.controller;
 
+import com.linkedin.post_service.auth.UserContextHolder;
+import com.linkedin.post_service.client.ConnectionClient;
 import com.linkedin.post_service.dto.CreatePostDTO;
+import com.linkedin.post_service.dto.PersonDTO;
 import com.linkedin.post_service.dto.PostDTO;
 import com.linkedin.post_service.entity.Post;
 import com.linkedin.post_service.mapper.PostMapper;
 import com.linkedin.post_service.service.PostService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,15 @@ public class PostController {
 
     private final PostService postService;
     private final PostMapper postMapper;
+    private final ConnectionClient c;
 
     @PostMapping
-    public ResponseEntity<PostDTO> createPost(
-        @RequestBody CreatePostDTO dto, HttpServletRequest req
-    ) {
+    public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostDTO dto) {
+        Long userId = UserContextHolder.getCurrentUserId();
         Post post = postMapper.toEntity(dto);
-        post.setUserId(1L);
+        post.setUserId(userId);
+
+        List<PersonDTO> pp = c.getFirstConnections(userId);
 
         Post createdPost = postService.createPost(post);
 
