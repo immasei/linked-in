@@ -18,5 +18,8 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
                                                 LikeTargetType targetType,
                                                 Long targetId);
 
-
+    long countByTargetTypeAndTargetId(
+            LikeTargetType targetType,
+            Long targetId
+    );
 }

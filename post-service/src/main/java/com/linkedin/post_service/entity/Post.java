@@ -1,5 +1,6 @@
 package com.linkedin.post_service.entity;
 
+import com.linkedin.post_service.enums.LikeTargetType;
 import com.linkedin.post_service.enums.PostVisibility;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
         @Index(name = "idx_posts_user_visibility_created", columnList = "user_id, visibility, created_at")
     }
 )
-public class Post {
+public class Post implements LikeTarget {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +40,14 @@ public class Post {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Override
+    public Long getCreatorId() {
+        return userId;
+    }
+
+    @Override
+    public LikeTargetType getTargetType() {
+        return LikeTargetType.POST;
+    }
 }
 

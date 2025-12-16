@@ -1,18 +1,18 @@
 package com.linkedin.post_service.controller;
 
 
+import com.linkedin.post_service.auth.UserContextHolder;
 import com.linkedin.post_service.dto.LikeRequestDTO;
 import com.linkedin.post_service.entity.Like;
+import com.linkedin.post_service.enums.LikeTargetType;
 import com.linkedin.post_service.mapper.LikeMapper;
-import com.linkedin.post_service.mapper.PostMapper;
 import com.linkedin.post_service.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/likes")
+@RequestMapping("/likes")
 @RequiredArgsConstructor
 public class LikeController {
 
@@ -21,8 +21,9 @@ public class LikeController {
 
     @PostMapping
     public ResponseEntity<Void> like(@RequestBody LikeRequestDTO dto) {
+        Long userId = UserContextHolder.getCurrentUserId();
         Like like = likeMapper.toEntity(dto);
-        like.setUserId(1L);
+        like.setUserId(userId);
 
         likeService.like(like);
         return ResponseEntity.noContent().build();
@@ -30,13 +31,13 @@ public class LikeController {
 
     @DeleteMapping
     public ResponseEntity<Void> unlike(@RequestBody LikeRequestDTO dto) {
-        likeService.unlike(1L, dto.getTargetType(), dto.getTargetId());
+        Long userId = UserContextHolder.getCurrentUserId();
+        likeService.unlike(userId, dto.getTargetType(), dto.getTargetId());
         return ResponseEntity.noContent().build();
     }
-//
-//    @GetMapping
-//    public ResponseEntity<List<LikeDTO>> getLikes(@RequestParam LikeTargetType targetType,
-//                                                  @RequestParam Long targetId) {
-//        return ResponseEntity.ok(likeService.getLikes(targetType, targetId));
-//    }
+
+    @GetMapping
+    public ResponseEntity<Long> getLikes(@RequestParam LikeTargetType type, @RequestParam Long id) {
+        return ResponseEntity.ok(likeService.getLikes(type, id));
+    }
 }

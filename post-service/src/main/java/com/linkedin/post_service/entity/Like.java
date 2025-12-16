@@ -14,10 +14,7 @@ import java.time.LocalDateTime;
 @Table(
     name = "likes",
     uniqueConstraints = {
-        @UniqueConstraint(
-            name = "uk_likes_user_target",
-            columnNames = {"user_id", "target_id", "target_type"}
-        )
+        @UniqueConstraint(name = "uk_likes_user_target", columnNames = {"user_id", "target_id", "target_type"})
     },
     indexes = {
         @Index(name = "idx_likes_target", columnList = "target_type, target_id"),

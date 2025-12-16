@@ -1,6 +1,7 @@
 package com.linkedin.post_service.service;
 
 import com.linkedin.post_service.entity.Post;
+import com.linkedin.post_service.event.PostCreated;
 import com.linkedin.post_service.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,19 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postsRepository;
+    private final OutboxService outboxService;
 
     @Transactional
     public Post createPost(Post post) {
-        return postsRepository.save(post);
+        Post savedPost = postsRepository.save(post);
+
+        PostCreated evt = PostCreated.of(savedPost);
+        outboxService.save(evt);
+
+        log.info("[Post] Post created: userId={}, id={}",
+                savedPost.getCreatorId(), savedPost.getId());
+
+        return savedPost;
     }
 
     @Transactional(readOnly = true)
@@ -32,4 +42,3 @@ public class PostService {
     }
 
 }
-

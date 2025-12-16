@@ -1,9 +1,7 @@
 package com.linkedin.post_service.controller;
 
 import com.linkedin.post_service.auth.UserContextHolder;
-import com.linkedin.post_service.client.ConnectionClient;
 import com.linkedin.post_service.dto.CreatePostDTO;
-import com.linkedin.post_service.dto.PersonDTO;
 import com.linkedin.post_service.dto.PostDTO;
 import com.linkedin.post_service.entity.Post;
 import com.linkedin.post_service.mapper.PostMapper;
@@ -22,15 +20,12 @@ public class PostController {
 
     private final PostService postService;
     private final PostMapper postMapper;
-    private final ConnectionClient c;
 
     @PostMapping
     public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostDTO dto) {
         Long userId = UserContextHolder.getCurrentUserId();
         Post post = postMapper.toEntity(dto);
         post.setUserId(userId);
-
-        List<PersonDTO> pp = c.getFirstConnections(userId);
 
         Post createdPost = postService.createPost(post);
 

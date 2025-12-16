@@ -1,5 +1,6 @@
 package com.linkedin.post_service.entity;
 
+import com.linkedin.post_service.enums.LikeTargetType;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -22,7 +23,7 @@ import java.util.List;
         @Index(name = "idx_comments_parent_id", columnList = "parent_id")
     }
 )
-public class Comment {
+public class Comment implements LikeTarget {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,5 +64,14 @@ public class Comment {
         this.replies.add(reply);
     }
 
+    @Override
+    public Long getCreatorId() {
+        return userId;
+    }
+
+    @Override
+    public LikeTargetType getTargetType() {
+        return LikeTargetType.COMMENT;
+    }
 }
 
