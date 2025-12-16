@@ -1,0 +1,32 @@
+{
+  "name": "post-outbox-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+
+    "database.hostname": "post_db",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "changeme",
+    "database.dbname": "post_db",
+    "topic.prefix": "post",
+
+    "table.include.list": "public.outboxs",
+
+    "plugin.name": "pgoutput",
+    "slot.name": "post_outbox_slot",
+
+    "tombstones.on.delete": "false",
+
+    "transforms": "outbox",
+    "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
+
+    "transforms.outbox.table.field.event.id": "id",
+    "transforms.outbox.table.field.event.key": "aggregate_id",
+    "transforms.outbox.table.field.event.type": "event_type",
+    "transforms.outbox.table.field.aggregate.id": "aggregate_id",
+    "transforms.outbox.table.field.aggregate.type": "aggregate_type",
+    "transforms.outbox.table.field.payload": "payload",
+
+    "transforms.outbox.route.by.field": "event_type"
+  }
+}
