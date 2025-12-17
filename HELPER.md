@@ -1,6 +1,10 @@
 # Helpers
 
 ```
+http://localhost:8085/user-service/default
+```
+
+```
 curl -X POST http://localhost:9090/connectors \
   -H "Content-Type: application/json" \
   -d @post-outbox-connector.json

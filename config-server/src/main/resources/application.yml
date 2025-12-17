@@ -1,0 +1,19 @@
+spring.application.name: config-server
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/immasei/linkedin-config-server
+#          username: immasei
+#          password:
+          default-label: main
