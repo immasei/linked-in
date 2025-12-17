@@ -5,6 +5,10 @@ http://localhost:8085/user-service/default
 ```
 
 ```
+http://localhost:8080/api/v1/connections/actuator/refresh
+```
+
+```
 curl -X POST http://localhost:9090/connectors \
   -H "Content-Type: application/json" \
   -d @post-outbox-connector.json
