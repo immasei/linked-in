@@ -12,7 +12,7 @@
 
 ## Overview
 This project is a LinkedIn-style backend system built using a microservices architecture. Each core feature is implemented as an independent service, and each service owns its own database. Microservices communicate with each other via `OpenFeign` for synchronous HTTP calls,
-and use `Kafka` for asynchronous event-based communication.
+and use `Kafka` for asynchronous event-based communication (Java 21, Maven).
 
 <p align="center">
   <img src="./system-diagram.png" width="100%"/>
