@@ -57,6 +57,19 @@ Start all infrastructure services using Docker:
 docker compose up -d
 ```
 
+Register Debezium Connector (Kafka Connect)
+```
+curl -X POST http://localhost:9090/connectors \
+  -H "Content-Type: application/json" \
+  -d @post-outbox-connector.json
+```
+```
+curl http://localhost:9090/connectors
+```
+```
+curl http://localhost:9090/connectors/post-outbox-connector/status
+```
+
 ### Note about pgAdmin
 
 On first run, each PostgreSQL container must be registered as a server in pgAdmin.
