@@ -29,11 +29,11 @@ and use `Kafka` for asynchronous event-based communication. Prerequisites: Java 
   - Authentication implemented using JWT
 
 - **Post Service**
-  - Handles creating and interacting with posts
+  - Handles creating and interacting with posts (ie create, like)
   - Uses the Transactional Outbox pattern with Debezium to publish events reliably
 
 - **Connection Service**
-  - Manages user connections (first-degree, second-degree, etc.)
+  - Manages user connections (first-degree, second-degree, add, accept, reject, etc.)
   - Designed for graph-style relationship queries
 
 - **Notification Service**
