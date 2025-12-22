@@ -94,17 +94,17 @@ Example: `post_db`
 
 Start services in the following order:
 
-1. config-server
+1. discovery-server
 
-2. discovery-server
+2. config-server
 
-3. api-gateway
-
-4. All other services
+3. All other services
       - user-service
       - post-service
       - connection-service
       - notification-service
+
+4. api-gateway
 
 ## Access the application
 
@@ -113,6 +113,7 @@ Start services in the following order:
 - PgAdmin: http://localhost:5050
 - Neo4j UI: http://localhost:7474
 - Kafbat UI: http://localhost:9091
+- Zipkin UI: http://localhost:9411
 - Config: https://github.com/immasei/linkedin-config-server
 
 ## TODO

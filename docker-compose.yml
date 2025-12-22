@@ -46,6 +46,8 @@ services:
       POSTGRES_DB: post_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changeme
+    volumes:
+      - post_db_data:/var/lib/postgresql/data
     command: >
       postgres -c wal_level=logical -c max_wal_senders=10 -c max_replication_slots=10
 
@@ -57,6 +59,8 @@ services:
       POSTGRES_DB: user_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changeme
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
 
   notification_db:
     image: postgres:16
@@ -66,6 +70,8 @@ services:
       POSTGRES_DB: notification_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changeme
+    volumes:
+      - notification_db_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -115,6 +121,16 @@ services:
       - CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE=false
       - CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE=false
 
+  # -------- Zipkin --------
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
 volumes:
+  post_db_data:
+  user_db_data:
+  notification_db_data:
   neo4j_data:
   neo4j_logs:

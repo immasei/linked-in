@@ -1,13 +1,29 @@
 # Helpers
 
+safe
+```
+docker compose stop
+```
+```
+docker compose down
+```
+
+wipe
+```
+docker compose down -v
+```
+
+prop
 ```
 http://localhost:8085/user-service/default
 ```
 
+refresh after modify prop
 ```
 http://localhost:8080/api/v1/connections/actuator/refresh
 ```
 
+connector
 ```
 curl -X POST http://localhost:9090/connectors \
   -H "Content-Type: application/json" \
@@ -26,6 +42,7 @@ curl http://localhost:9090/connectors/post-outbox-connector/status
 curl -X DELETE http://localhost:9090/connectors/post-outbox-connector
 ```
 
+kafka
 ```
 docker exec -it linked-in-kafka-1 kafka-console-consumer \
   --bootstrap-server kafka:9092 \
@@ -36,6 +53,13 @@ docker exec -it linked-in-kafka-1 kafka-console-consumer \
   --whitelist '.*'
 ```
 
+java version
+```
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+feat
 ```
 http://localhost:8080/api/v1/users/auth/signup
 ```
@@ -49,11 +73,6 @@ http://localhost:8080/api/v1/users/auth/login
 http://localhost:8080/api/v1/posts/core
 ```
 
-```
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-export PATH="$JAVA_HOME/bin:$PATH"
-
-```
 ```
 http://localhost:8080/api/v1/posts/likes?type=POST&id=52
 ```
