@@ -117,8 +117,8 @@ Start services in the following order:
 - Config: https://github.com/immasei/linkedin-config-server
 
 ## TODO
-- Distributed Tracing using Zipkin & Micrometer
 - Centralised logging (ELK)
+- Circuit Breaker, Retry, and Rate Limiter with Resilience4J
 - Authorization
 - Frontend
 - Additional features and improvements
